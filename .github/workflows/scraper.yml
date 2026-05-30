@@ -2,7 +2,7 @@ name: Vahan Dashboard Scraper PanIndia
 
 on:
   schedule:
-    # Optional: Automatically runs every day at midnight UTC (Change or remove if not needed)
+    # Automatically runs every day at midnight UTC
     - cron: '0 0 * * *'
   workflow_dispatch:
     # Allows you to manually trigger the scraper from the GitHub UI
@@ -17,7 +17,6 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-node@v4 # Used implicitly by checkout for certain caching steps or setup tools, but let's use the explicit python setup below
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
@@ -37,7 +36,7 @@ jobs:
 
     - name: Upload Scraped CSV Data as Artifact
       uses: actions/upload-artifact@v4
-      if: always() # Forces artifact upload even if the script hits a timeout or minor crash midway
+      if: always() # Forces artifact upload even if the script hits a timeout midway
       with:
         name: vahan-scraped-data
         path: Panindia_*.csv
